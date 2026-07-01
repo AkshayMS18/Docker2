@@ -11,5 +11,10 @@ pipeline {
                 echo "Building docker image using Dockerfile"
             }
         }
+        stage("pushing docker image to dockerhub"){
+            steps {
+                echo "Pushing docker image to dockerhub"
+            }
+        }
     }
 }
