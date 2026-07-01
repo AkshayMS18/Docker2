@@ -9,6 +9,7 @@ pipeline {
         stage("building docker images"){
             steps {
                 echo "Building docker image using Dockerfile"
+                sh "docker build -t microdegree:latest ."
             }
         }
         stage("pushing docker image to dockerhub"){
