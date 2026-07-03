@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "microdegreee"
         IMAGE_TAG = "latest"
+        DOCKERHUB_USER = "akshayms18"
     }
 
     stages {
