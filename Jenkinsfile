@@ -36,7 +36,7 @@ pipeline {
                     docker pull $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
 
                     echo "Running Docker container on EC2 instance"
-                    docker run -d -p 8000:8000 $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
+                    docker run -d -p 8000:8000 $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
         }
