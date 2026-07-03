@@ -5,6 +5,7 @@ pipeline {
         IMAGE_NAME = "microdegreee"
         IMAGE_TAG = "latest"
         DOCKERHUB_USER = "akshayms18"
+        CONTAINER_NAME = "micro-container"
     }
 
     stages {
@@ -28,7 +29,11 @@ pipeline {
                 }
             }
         }
-        stage("Deploy Docker containers"){
+        stage("Deploy Docker containers to EC2"){
+            input {
+                message "Deploying Docker container to EC2 instance, please confirm to proceed."
+                ok "Deploy"
+            }
             steps {
                 sh '''
                     echo "Deploying docker containers to EC2 instance"
@@ -36,7 +41,7 @@ pipeline {
                     docker pull $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_TAG
 
                     echo "Running Docker container on EC2 instance"
-                    docker run -d -p 8000:8000 $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_TAG
+                    docker run -d --name $CONTAINER_NAME -p 8000:8000 $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_TAG
                 '''
             }
         }
