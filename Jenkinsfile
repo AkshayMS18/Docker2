@@ -33,7 +33,7 @@ pipeline {
                 sh '''
                     echo "Deploying docker containers to EC2 instance"
                     echo "Pulling Docker image from Docker Hub"
-                    docker pull $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
+                    docker pull $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_TAG
 
                     echo "Running Docker container on EC2 instance"
                     docker run -d -p 8000:8000 $DOCKERHUB_USER/$IMAGE_NAME:$IMAGE_TAG
