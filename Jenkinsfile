@@ -40,5 +40,10 @@ pipeline {
                 '''
             }
         }
+         stage("Testing webhook"){
+            steps {
+                echo "Testing webhook - if webhook is working, this stage will be executed after pushing the code, automatically"
+            }
+        }
     }
 }
