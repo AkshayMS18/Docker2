@@ -17,5 +17,10 @@ pipeline {
                 echo "Pushing docker image to dockerhub"
             }
         }
+         stage("Deploy Docker containers"){
+            steps {
+                echo "Deploying docker containers using docker-compose"
+            }
+        }
     }
 }
