@@ -1,5 +1,11 @@
 pipeline {
     agent any
+
+    environment {
+        IMAGE_NAME = "microdegreee"
+        IMAGE_TAG = "latest"
+    }
+
     stages {
         stage('git checkout'){
             steps {
@@ -9,15 +15,19 @@ pipeline {
         stage("building docker images"){
             steps {
                 echo "Building docker image using Dockerfile"
-                sh "docker build -t microdegree:latest ."
+                sh "docker build -t $IMAGE_NAME:latest ."
             }
         }
         stage("pushing docker image to dockerhub"){
             steps {
-                echo "Pushing docker image to dockerhub"
+                withCredentials([usernamePassword(credentialsId: 'creds-of-dockerhub', passwordVariable: 'DOCKER_USER', usernameVariable: 'DOCKER_PASSWORD')]) {
+                 sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
+                 sh "docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
+                }
             }
         }
-         stage("Deploy Docker containers"){
+        stage("Deploy Docker containers"){
             steps {
                 echo "Deploying docker containers using docker-compose"
             }
